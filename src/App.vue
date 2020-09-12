@@ -16,11 +16,11 @@ export default {
   data: function () {
     let vertexes = [
       {
-        x: 200,
+        x: 150,
         y: 100,
       },
       {
-        x: 150,
+        x: 50,
         y: 150,
       },
       {
@@ -28,16 +28,16 @@ export default {
         y: 150,
       },
       {
-        x: 150,
-        y: 250,
+        x: 50,
+        y: 320,
       },
       {
         x: 250,
-        y: 250,
+        y: 320,
       },
       {
-        x: 200,
-        y: 300,
+        x: 150,
+        y: 400,
       },
     ];
     let edges = [

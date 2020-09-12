@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-container>
-      <el-header style="border: 1px solid #eee">
+    <el-container >
+      <el-header>
         <el-button type="primary" round @click="showKruskal()">Kruskal</el-button>
         <el-button type="primary" round @click="showPrim()">Prim</el-button>
         <el-button type="primary" round @click="reset()">Reset</el-button>&nbsp;&nbsp;
@@ -50,7 +50,7 @@
             v-for="(vertex,index) in vertexesDisp"
             :key="index"
             v-bind:style="{left:vertex.left,top:vertex.top,backgroundColor:vertex.color}"
-          >{{ vertex.index }}</div>
+          ><div style="position:absolute;top:7px;left:10px">{{ vertex.index }}</div></div>
         </div>
       </el-aside>
 
@@ -96,7 +96,7 @@ export default {
   computed: {
     vertexesDisp: function () {
       const activeVertexColor = "aliceblue";
-      const normalVertexColor = "#42b983";
+      const normalVertexColor = "#b1c1d1";
       const lockVertexColor = "#66b1ff";
 
       let vertexesDisp = [];
@@ -344,8 +344,8 @@ a {
 .vertex {
   position: absolute;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   color: #000;
   background-color: #42b983;
   transition: background-color 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -376,10 +376,10 @@ a {
 }
 
 .el-table .success-row {
-  background: gold;
+  background: rgba(2, 238, 255, 0.404);
 }
 
 .el-table .active-row {
-  background: blueviolet;
+  background: rgba(253, 249, 2, 0.966);
 }
 </style>
