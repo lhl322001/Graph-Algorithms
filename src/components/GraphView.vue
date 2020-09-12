@@ -2,9 +2,6 @@
   <div>
     <el-container >
       <el-header>
-        <el-button type="primary" round @click="showKruskal()">Kruskal</el-button>
-        <el-button type="primary" round @click="showPrim()">Prim</el-button>
-        <el-button type="primary" round @click="reset()">Reset</el-button>&nbsp;&nbsp;
         <el-popover placement="bottom" width="400" trigger="click">
           <div class="adjList" v-for="(node,index) in graph.adjacencyList" :key="index">
             <div style="display:inline-block">{{ index }}</div>
@@ -14,10 +11,13 @@
               :key="index+'_'+edgeIndex"
             >{{ edge.to }}</div>
           </div>
-          <el-button type="primary" round slot="reference">邻接表</el-button>
+          <el-button type="primary" round slot="reference">Adjacency List</el-button>
         </el-popover>&nbsp;&nbsp;
+        <el-button type="primary" round @click="showKruskal()">Kruskal</el-button>
+        <el-button type="primary" round @click="showPrim()">Prim</el-button>
         <el-button type="primary" round @click="showDijkstra()">Dijkstra</el-button>
         <el-button type="primary" round @click="showFloyd()">Floyd</el-button>
+        <el-button type="primary" round @click="reset()">Reset</el-button>&nbsp;&nbsp;
         <el-select v-model="dijStart">
           <el-option
             v-for="(node,index) in graph.vertexes"
