@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-container>
-      <el-header style="border: 1px solid #eee">
+    <el-container >
+      <el-header>
         <el-button type="primary" round @click="showKruskal()">Kruskal</el-button>
         <el-button type="primary" round @click="showPrim()">Prim</el-button>
         <el-button type="primary" round @click="reset()">Reset</el-button>&nbsp;&nbsp;
