@@ -1,6 +1,16 @@
 function Graph(vertexes, edges) {
     this.vertexes = typeof vertexes === "undefined" ? [] : vertexes;
-    this.edges = typeof edges === "undefined" ? [] : edges;
+    this.edges = [];
+    if (typeof(edges) !== "undefined") {
+        for (let i = 0; i < edges.length; i++) {
+            this.edges.push({
+                index: i,
+                from: edges[i].from,
+                to: edges[i].to,
+                dist: edges[i].dist
+            });
+        }
+    }
 
     //邻接表
     this.adjacencyList = new Array(this.vertexes.length);

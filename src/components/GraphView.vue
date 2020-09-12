@@ -57,7 +57,7 @@
       <el-main style="border: 1px solid #eee">
         <el-table
           v-if="!shortestPathFinished"
-          :data="graph.edges"
+          :data="edges"
           style="width: 100%"
           :row-class-name="tableRowClassName"
         >
@@ -72,7 +72,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="showPath(scope.$index,index)"
+                @click="showPath(scope.row.from,index)"
               >{{ scope.row.dist[index] }}</el-button>
             </template>
           </el-table-column>
@@ -119,8 +119,8 @@ export default {
     edgesDisp: function () {
       let edgesDisp = [];
       this.edges.forEach((edge) => {
-        let u = this.graph.vertexes[edge.from];
-        let v = this.graph.vertexes[edge.to];
+        let u = this.vertexes[edge.from];
+        let v = this.vertexes[edge.to];
 
         let dist = Math.sqrt(
           (u.x - v.x) * (u.x - v.x) + (u.y - v.y) * (u.y - v.y)
@@ -142,14 +142,18 @@ export default {
         });
       });
       return edgesDisp;
-    }
+    },
   },
   created() {
     this.reset();
   },
   methods: {
-    tableRowClassName({rowIndex}) {
-      if(typeof this.edges === 'undefined' || typeof rowIndex === 'undefined' || rowIndex >= this.edges.length) {
+    tableRowClassName({ rowIndex }) {
+      if (
+        typeof this.edges === "undefined" ||
+        typeof rowIndex === "undefined" ||
+        rowIndex >= this.edges.length
+      ) {
         return "";
       }
       if (this.edges[rowIndex].isActive) {
@@ -176,10 +180,13 @@ export default {
           from: element.from,
           to: element.to,
           dist: element.dist,
+          index: element.index,
           isActive: false,
           isSelected: false,
         });
       });
+      console.log("sorted:");
+      console.log(this.edges);
       if (this.animationHandle !== null) {
         clearInterval(this.animationHandle);
         this.animationHandle = null;
@@ -188,17 +195,21 @@ export default {
     },
     reset() {
       this.resetGraph();
+
+      this.edges.sort(function (edgeA, edgeB) {
+        return edgeA.index - edgeB.index;
+      });
       this.shortestPathFinished = false;
     },
     showKruskal() {
-      this.reset();
       this.operations = kruksal(this.graph);
+      this.resetGraph();
       console.log(this.operations);
       this.animationHandle = setInterval(this.animationStep, 500);
     },
     showPrim() {
-      this.reset();
       this.operations = prim(this.graph);
+      this.reset();
       console.log(this.operations);
       this.animationHandle = setInterval(this.animationStep, 500);
     },
@@ -217,6 +228,9 @@ export default {
     },
     showPath(u, v) {
       this.resetGraph();
+      this.edges.sort(function (edgeA, edgeB) {
+        return edgeA.index - edgeB.index;
+      });
       let res = dijkstra(this.graph, u);
       if (res.distance[v] === Infinity) {
         this.$message({
@@ -268,15 +282,16 @@ export default {
       }
       let curOpt = this.operations[this.stepNum];
       //console.log(curOpt);
+      console.log(this.edges, this.graph.edges, this.edgesDisp);
       if (curOpt.type === "activate") {
-        let u=this.edges[curOpt.index].from;
-        let v=this.edges[curOpt.index].to;
+        let u = this.edges[curOpt.index].from;
+        let v = this.edges[curOpt.index].to;
         this.vertexes[u].isActive = true;
         this.vertexes[v].isActive = true;
         this.edges[curOpt.index].isActive = true;
       } else if (curOpt.type === "deactivate") {
-        let u=this.edges[curOpt.index].from;
-        let v=this.edges[curOpt.index].to;
+        let u = this.edges[curOpt.index].from;
+        let v = this.edges[curOpt.index].to;
         this.vertexes[u].isActive = false;
         this.vertexes[v].isActive = false;
         this.edges[curOpt.index].isActive = false;
@@ -298,6 +313,7 @@ export default {
     return {
       vertexes: [],
       edges: [],
+      edgesBackup: [],
       operations: [],
       stepNum: 0,
       animationHandle: null,

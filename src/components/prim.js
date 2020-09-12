@@ -16,12 +16,15 @@ function prim(graph) {
     visited[0] = true;
 
     let pq = new Heap([], function (edgeA, edgeB) {
-        return edgeA.dist - edgeB.dist;
+        return edgeA.dist > edgeB.dist;
     });
 
     graph.adjacencyList[0].forEach(edge => {
         pq.push(edge);
     });
+
+    let cnt = 0;
+    let sum = 0;
 
     while (!pq.empty()) {
         let e = pq.top();
@@ -31,6 +34,12 @@ function prim(graph) {
         }
         visited[e.to] = true;
         sequence.push({ type: "selectEdge", index: e.index });
+
+        sum += e.dist;
+        console.log(sum, e.dist);
+        if (++cnt == graph.vertexes.length) {
+            return sequence;
+        }
 
         graph.adjacencyList[e.to].forEach(edge => {
             pq.push(edge);
