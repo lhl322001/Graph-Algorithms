@@ -204,6 +204,7 @@ export default {
     showKruskal() {
       this.operations = kruksal(this.graph);
       this.resetGraph();
+      this.shortestPathFinished=false;
       console.log(this.operations);
       this.animationHandle = setInterval(this.animationStep, 500);
     },
