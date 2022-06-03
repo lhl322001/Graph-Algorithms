@@ -1,10 +1,9 @@
 # Graph Theoretic Algorithms
 
 ## Algorithms
-### Dijkstra
-### Bellman-Ford
-### Floyd
-
+1. Dijkstra
+2. Bellman-Ford
+3. Floyd
 
 ## Project setup
 ```
