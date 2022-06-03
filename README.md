@@ -1,4 +1,10 @@
-# homework
+# Graph Theoretic Algorithms
+
+## Algorithms
+### Dijkstra
+### Bellman-Ford
+### Floyd
+
 
 ## Project setup
 ```
